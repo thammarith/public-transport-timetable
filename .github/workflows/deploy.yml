@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3.0.1
         with:
           name: dist
-          path: dist/assets/
+          path: dist/
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4.0.4
