@@ -20,10 +20,13 @@ const App: Component = () => {
     const nextOne4 = getTime(cuPopBus4)
 
     return (
-        <section>
+        <section style={{ padding: '2rem'}}>
             <h1>
-                {currentTime().toLocaleString('de-de', {
+                {currentTime().toLocaleDateString('de-de', {
                     dateStyle: 'full',
+                })}
+                <br />
+                {currentTime().toLocaleTimeString('de-de', {
                     timeStyle: 'medium',
                 })}
             </h1>
