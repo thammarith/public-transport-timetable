@@ -15,7 +15,7 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
@@ -30,18 +30,6 @@ jobs:
         run: pnpm install
       - name: Build the project
         run: pnpm run build # Run the build command as defined in your package.json
-      - name: Upload artefacts
-        uses: actions/upload-pages-artifact@v3.0.1
-        with:
-          name: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4.0.4
