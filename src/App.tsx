@@ -1,4 +1,4 @@
-import { createSignal, type Component } from 'solid-js';
+import { createSignal, type Component, createEffect } from 'solid-js';
 
 import logo from './logo.svg';
 import styles from './App.module.css';
@@ -8,16 +8,22 @@ const App: Component = () => {
     console.log(cuPopBus1);
 
     const [currentTime, setCurrentTime] = createSignal(new Date());
+    const [nextOne1, setNextOne1] = createSignal<number[]>([])
+    const [nextOne4, setNextOne4] = createSignal<number[]>([])
 
     setInterval(() => setCurrentTime(new Date()), 1000);
 
-    const getTime = (_: any) => _.timetable[currentTime().getDay()]
-      ?.[currentTime().getHours()]
-      ?.frequencies
-      ?.filter((m: number) => m >= currentTime().getMinutes());
+    createEffect(() => {
+        const getTime = (_: any) => _
+            .timetable[currentTime().getDay()]
+            ?.[currentTime().getHours()]
+            ?.frequencies
+            ?.filter((m: number) => m >= currentTime().getMinutes());
 
-    const nextOne1 = getTime(cuPopBus1)
-    const nextOne4 = getTime(cuPopBus4)
+
+        setNextOne1(getTime(cuPopBus1));
+        setNextOne4(getTime(cuPopBus4));
+    });
 
     return (
         <section style={{ padding: '2rem'}}>
@@ -31,10 +37,10 @@ const App: Component = () => {
                 })}
             </h1>
             <h2>CU 1</h2>
-            <div>{JSON.stringify(nextOne1) || 'NOT FOUND'}</div>
+            <div>{JSON.stringify(nextOne1()) || 'NOT FOUND'}</div>
 
             <h2>CU 4</h2>
-            <div>{JSON.stringify(nextOne4) || 'NOT FOUND'}</div>
+            <div>{JSON.stringify(nextOne4()) || 'NOT FOUND'}</div>
         </section>
     );
 };
