@@ -3,6 +3,7 @@ import { createSignal, type Component, createEffect } from 'solid-js';
 import logo from './logo.svg';
 import styles from './App.module.css';
 import { cuPopBus1, cuPopBus4 } from './data/cu-popbus';
+import { pad } from './helpers/formatting'
 
 const App: Component = () => {
     console.log(cuPopBus1);
@@ -37,14 +38,14 @@ const App: Component = () => {
             <h2>CU 1</h2>
             <div>
                 {nextOne1()
-                    .map((_) => `${currentTime().getHours()}:${_}`)
+                    .map((m) => `${currentTime().getHours()}:${pad(m)}`)
                     .join(', ') || 'Not found'}
             </div>
 
             <h2>CU 4</h2>
             <div>
                 {nextOne4()
-                    .map((_) => `${currentTime().getHours()}:${_}`)
+                    .map((m) => `${currentTime().getHours()}:${pad(m)}`)
                     .join(', ') || 'Not found'}
             </div>
         </section>
