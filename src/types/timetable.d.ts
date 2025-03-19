@@ -1,12 +1,13 @@
+interface Schedule {
+    [key: number]: {
+        frequencies: number[];
+    };
+}
+
 export interface Timetable {
     id: string;
     name: string;
-    // timetable: Record<DayTimetable, string>
+    timetable: {
+        [key: number]: Schedule;
+    };
 }
-
-// interface DayTimetable extends Record<'mon' | 'tue', HourTimetable> {
-
-// }
-
-// interface HourTimetable {
-// }

@@ -1,4 +1,5 @@
 import { _every, entries, every } from "../helpers/timetable"
+import { Schedule, Timetable } from "../types/timetable";
 
 const cuPopBus1Weekday = {
     6: every(15, 30, 45),
@@ -19,7 +20,7 @@ const cuPopBus1Weekday = {
     21: every(30, 15),
 }
 
-const cuPopBus4Weekday = {
+const cuPopBus4Weekday: Schedule = {
     6: entries([40, 55]),
     7: entries([3, 10, 18, 25, 33, 40, 48, 55]),
     8: entries([3, 10, 18, 25, 33, 40, 48, 55]),
@@ -38,7 +39,7 @@ const cuPopBus4Weekday = {
     21: entries([10, 40]),
 }
 
-export const cuPopBus1 = {
+export const cuPopBus1: Timetable = {
     id: 'cuPopBus1',
     name: 'CU Pop Bus 1',
     timetable: {
@@ -50,7 +51,7 @@ export const cuPopBus1 = {
     }
 };
 
-export const cuPopBus4 = {
+export const cuPopBus4: Timetable = {
     id: 'cuPopBus4',
     name: 'CU Pop Bus 4',
     timetable: {
