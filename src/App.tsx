@@ -12,18 +12,26 @@ const App: Component = () => {
     setInterval(() => setCurrentTime(new Date()), 1000);
 
     createEffect(() => {
-        const getTime = (timetable: Timetable, day: number = currentTime().getDay(), hour: number = currentTime().getHours()) =>
-            timetable.timetable[day]?.[hour]?.frequencies?.filter(
-                (m: number) => (day === currentTime().getDay() && hour === currentTime().getHours()) ? m >= currentTime().getMinutes() : true,
-            );
+        const nextHour = new Date(currentTime().valueOf() + 60 * 60 * 1000);
+
+        const getTime = (
+            timetable: Timetable,
+            when: Date = currentTime(),
+            shouldRemovePast: boolean = when.getDay() === currentTime().getDay()
+                && when.getHours() === currentTime().getHours()
+        ) => timetable.timetable[when.getDay()]
+            ?.[when.getHours()]
+            ?.frequencies
+            ?.filter((m: number) => !shouldRemovePast || m >= currentTime().getMinutes())
+            ?? [];
 
         setNextOne1([
-            ...getTime(cuPopBus1).map((m) => `${currentTime().getHours()}:${pad(m)}`),
-            ...getTime(cuPopBus1, undefined, (currentTime().getHours() + 1) % 24).map((m) => `${(currentTime().getHours() + 1) % 24}:${pad(m)}`)
+            ...getTime(cuPopBus1, undefined).map((m) => `${currentTime().getHours()}:${pad(m)}`),
+            ...getTime(cuPopBus1, nextHour, false).map((m) => `${nextHour.getHours() % 24}:${pad(m)}`)
         ]);
         setNextOne4([
             ...getTime(cuPopBus4).map((m) => `${currentTime().getHours()}:${pad(m)}`),
-            ...getTime(cuPopBus4, undefined, (currentTime().getHours() + 1) % 24).map((m) => `${(currentTime().getHours() + 1) % 24}:${pad(m)}`)
+            ...getTime(cuPopBus4, nextHour, false).map((m) => `${nextHour.getHours() % 24}:${pad(m)}`)
         ]);
     });
 
